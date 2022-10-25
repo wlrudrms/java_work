@@ -16,5 +16,10 @@ public class MainClass05 {
 		r.width = 10;
 		r.height = 20;
 		r.showArea();
+		
+		Rect r2 = new Rect();
+		r2.width = 5;
+		r2.height = 10;
+		r2.showArea();
 	}
 }
