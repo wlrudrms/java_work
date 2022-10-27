@@ -34,10 +34,11 @@ public class Oct26_1 {
 			System.out.println("80");
 		}else if(items[r1]==items[r2] && items[r2] == items[r3] && items[r1] == "melon"){
 			System.out.println("160");
-		}else if(items[r1]==items[r2] && items[r2] == items[r3] && items[r1] == "apple"){
+		}else if(items[r1]==items[r2] && items[r2] == items[r3] && items[r1] == "7"){
 			System.out.println("777");
 		}else {
 			System.out.println("꽝");
 		}
+		//ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋStep7 QuizMain3보고 반성좀하자
 	}
 }
