@@ -5,7 +5,7 @@ import java.util.Random;
 public class Oct27_2_Lotto {
 	public static void main(String[] args) {
 		// 당첨될 때까지 돌리기
-		for (int k = 0; k < 10000000; k++) {
+		for (int k = 0; ; k++) {
 
 			// 로또번호 생성
 			Random ran = new Random();
