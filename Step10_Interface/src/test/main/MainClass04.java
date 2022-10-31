@@ -10,15 +10,15 @@ public class MainClass04 {
 				System.out.println("바닥에 구멍을 뚫어요");
 			}
 		});
-		
+
 		// interface에서 override할 메소드가 하나인 경우 아래와같이 Drill type 데이터를 얻어올 수 있다.
-		useDrill(()->{
+		useDrill(() -> {
 			System.out.println("천장에 구멍을 뚫어요");
 		});
-		
-		//ArrayList 
+
+		// ArrayList
 	}
-	
+
 	public static void useDrill(Drill d) {
 		d.hole();
 	}

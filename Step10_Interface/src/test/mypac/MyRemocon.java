@@ -1,6 +1,6 @@
 package test.mypac;
 
-public class MyRemocon implements Remocon{
+public class MyRemocon implements Remocon {
 
 	@Override
 	public void up() {
