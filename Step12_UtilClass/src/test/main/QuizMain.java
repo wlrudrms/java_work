@@ -23,6 +23,6 @@ public class QuizMain {
 		System.out.print("검색할 단어를 입력하세요:");
 		String word = scan.next();
 		System.out.println(word+"의 뜻은 "+dic.get(word)+"입니다.");
-		
+		//test
 	}
 }
