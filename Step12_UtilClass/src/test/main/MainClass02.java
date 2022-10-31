@@ -36,17 +36,17 @@ public class MainClass02 {
 			}
 		};
 		names.forEach(con);
-		
+
 		// forEach 메소드 활용2
 		System.out.println("----- forEach 메소드 활용2 -----");
 		Consumer<String> con2 = (t) -> {
 			System.out.println(t);
 		};
 		names.forEach(con);
-		
+
 		// forEach 메소드 활용3
 		System.out.println("----- forEach 메소드 활용3 -----");
-		names.forEach((t)->{
+		names.forEach((t) -> {
 			System.out.println(t);
 		});
 	}

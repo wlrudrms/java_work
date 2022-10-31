@@ -16,22 +16,20 @@ public class MainClass04 {
 		cars.add(new Car("아반떼"));
 		// 3. 반복문 for문을 이용해서 List 객체에 저장된 모든 Car 객체의 drive()메소드를
 		// 순서대로 호출해 보세요.
-		
+
 		for (int i = 0; i < cars.size(); i++) {
 			cars.get(i).drive();
 		}
-		
+
 		System.out.println("------ 확장 for문 활용 ------");
 		for (Car tmp : cars) {
 			tmp.drive();
 		}
-		
+
 		System.out.println("----- Consumer 인터페이스 활용 -----");
-		cars.forEach((item)->{
+		cars.forEach((item) -> {
 			item.drive();
 		});
-		
-		
 
 	}
 }
