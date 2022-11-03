@@ -1,4 +1,4 @@
-package frame05;
+package frame08;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -41,20 +41,14 @@ public class MyFrame extends JFrame implements ActionListener {
 	// run 했을때 실행의 흐름이 시작되는 특별한 메소드
 	public static void main(String[] args) {
 		// MyFrame 객체 생성하기
-		new MyFrame("나의 프레임5");
+		new MyFrame("나의 프레임8");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("카운트 다운을 시작 합니다.");
-		// 내부 클래스로 객체 생성해서 스레드 시작시키기
-		new InnerCountThread().start();
-	}
-	
-	// MyFrame 클래스의 내부 클래스로 스레드 클래스 만들기
-	class InnerCountThread extends Thread{
-		@Override
-		public void run() {
+		
+		new Thread(()->{
 			// 카운트 값을 저장할 지역변수 만들고 초기 값 대입
 			int count = 10;
 			while (true) {
@@ -64,11 +58,12 @@ public class MyFrame extends JFrame implements ActionListener {
 				}
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				} catch (InterruptedException e2) {
+					e2.printStackTrace();
 				}
 				count--;
 			}
-		}
+		}).start();
 	}
+	
 }
