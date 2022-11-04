@@ -80,33 +80,37 @@ public class QuizMain3 extends JFrame implements ActionListener {
 		}
 	}
 
-	File memoFile = new File("C:\\Users\\wlrud\\OneDrive\\Desktop\\java_mb\\myFolder/memo.txt");
-	// 필요한 객체를 담을 지역 변수를 미리 만들기
-	FileReader fr = null;
-	BufferedReader br = null;
-	FileWriter fw = null;
-
 	// 파일에 문자열을 추가할 메소드
 	public void saveToFile() {
-		String msg = inputMsg.getText();
-		// memo.txt 파일에 출력하기
+		File memoFile = new File("C:\\Users\\wlrud\\OneDrive\\Desktop\\java_mb\\myFolder/memo.txt");
+		// 필요한 객체를 담을 지역 변수를 미리 만들기
+		FileWriter fw = null;
 		try {
+			// 입력한 문자열을 읽어온다.
+			String msg = inputMsg.getText();
+			// memo.txt 파일에 출력하기
 			fw = new FileWriter(memoFile, true);
 			fw.write(msg + "\r\n");
 			fw.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		} finally {
+			// exception이 발생하건 안하건 실행할 수 있는 공간에서 마무리작업을 해준다.
 			try {
-				if (fw != null) fw.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+				if (fw != null)
+					fw.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
 	}
 
 	// 파일로부터 문자열을 읽어들이는 메소드
 	public void loadFromFile() {
+		File memoFile = new File("C:\\Users\\wlrud\\OneDrive\\Desktop\\java_mb\\myFolder/memo.txt");
+		// 필요한 객체를 담을 지역 변수를 미리 만들기
+		FileReader fr = null;
+		BufferedReader br = null;
 		try {
 			fr = new FileReader(memoFile);
 			br = new BufferedReader(fr);
@@ -121,8 +125,20 @@ public class QuizMain3 extends JFrame implements ActionListener {
 				// 읽은 문자열 한줄을 개행기호와 함께 JTextArea 객체에 출력하기
 				textArea.append(line + "\r\n");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		} finally {
+			// exception이 발생하건 안하건 실행할 수 있는 공간에서 마무리작업을 해준다.
+			try {
+				// 혹시 모를 null 로 넘어오는 상황을 위해 대비
+				// 닫는 작업은 열린 순서의 역순으로 하면 좋다.
+				if (br != null)
+					br.close();
+				if (fr != null)
+					fr.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 
