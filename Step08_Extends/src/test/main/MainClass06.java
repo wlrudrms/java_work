@@ -2,7 +2,7 @@ package test.main;
 
 import test.mypac.HandPhone;
 import test.mypac.SmartPhone;
-
+//업캐스팅이 선행되지 않으면 다운캐스팅을 할 수 없다.
 public class MainClass06 {
 	public static void main(String[] args) {
 		
