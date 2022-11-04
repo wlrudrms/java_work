@@ -85,7 +85,7 @@ public class QuizMain extends JFrame implements ActionListener {
 					fr.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
-			}
+			} 
 		}
 	}
 }
