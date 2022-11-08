@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -17,25 +20,28 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import test.dao.MemberDao;
-import test.dto.MemberDto;
+import test.dao.FriendDao;
+import test.dto.FriendDto;
 
-public class MemberFrame extends JFrame implements ActionListener, PropertyChangeListener {
+public class FriendFrame extends JFrame implements ActionListener, PropertyChangeListener {
 	// 필드
-	JTextField inputName, inputAddr;
+	JTextField inputName, inputPhone, inputBirth;
 	DefaultTableModel model;
 	JTable table;
 
 	// 생성자
-	public MemberFrame() {
+	public FriendFrame() {
 		// 레이아웃 메니저 설정
 		setLayout(new BorderLayout());
 
 		JLabel label1 = new JLabel("이름");
 		inputName = new JTextField(10);
 
-		JLabel label2 = new JLabel("주소");
-		inputAddr = new JTextField(10);
+		JLabel label2 = new JLabel("연락처");
+		inputPhone = new JTextField(10);
+		
+		JLabel label3 = new JLabel("생일");
+		inputBirth = new JTextField(10);
 
 		JButton saveBtn = new JButton("저장");
 		saveBtn.setActionCommand("save");
@@ -48,7 +54,9 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 		panel.add(label1);
 		panel.add(inputName);
 		panel.add(label2);
-		panel.add(inputAddr);
+		panel.add(inputPhone);
+		panel.add(label3);
+		panel.add(inputBirth);
 		panel.add(saveBtn);
 		panel.add(deleteBtn);
 		// 페널째로 프레임의 북쪽에 배치
@@ -57,7 +65,7 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 		// 표형식으로 정보를 출력하기 위한 JTable
 		table = new JTable();
 		// 칼럼명을 String[] 에 순서대로 준비
-		String[] colNames = { "번호", "이름", "주소" };
+		String[] colNames = { "번호", "이름", "연락처", "생일" };
 		// 테이블에 연결할 모델객체(테이블에 출력할 데이터를 가지고 있는 객체)
 		model = new DefaultTableModel(colNames, 0) {
 			@Override
@@ -82,36 +90,31 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 		saveBtn.addActionListener(this);
 		deleteBtn.addActionListener(this);
 
-		displayMember();
+		displayFriend();
 
 		table.addPropertyChangeListener(this);
 	}
 
-	// 테이블에 회원 목록을 출력하는 메소드
-	public void displayMember() {
-		/*
-		 * //sample 데이터 Object[] row1= {1, "김구라", "노량진"}; Object[] row2= {2, "해골",
-		 * "행신동"}; Object[] row3= {3, "원숭이", "동물원"}; //sample 데이터를 DefaultTableModel 객체에
-		 * 추가 하기 model.addRow(row1); model.addRow(row2); model.addRow(row3);
-		 */
-
-		// MemberDao 객체의 .getList() 메소드가 리턴해주는 데이터를 활용해서 회원목록을 출력해 보세요.
+	// 테이블에 친구 목록을 출력하는 메소드
+	public void displayFriend() {
+		
+		// FriendDao 객체의 .getList() 메소드가 리턴해주는 데이터를 활용해서 친구목록을 출력해 보세요.
 
 		model.setRowCount(0); // 테이블에 출력된 데이터 reset
 
-		List<MemberDto> list = new MemberDao().getList();
+		List<FriendDto> list = new FriendDao().getList();
 
-		// 반복문 돌면서 순서대로 MemberDto 객체를 참조해서
-		for (MemberDto tmp : list) {
+		// 반복문 돌면서 순서대로 FriendDto 객체를 참조해서
+		for (FriendDto tmp : list) {
 			// Object 배열로 만든 다음
-			Object[] row = { tmp.getNum(), tmp.getName(), tmp.getAddr() };
+			Object[] row = { tmp.getNum(), tmp.getName(), tmp.getPhone(), tmp.getBirth() };
 			// 모델에 추가
 			model.addRow(row);
 		}
 	}
 
 	public static void main(String[] args) {
-		MemberFrame f = new MemberFrame();
+		FriendFrame f = new FriendFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setBounds(100, 100, 800, 500);
 		f.setVisible(true);
@@ -123,16 +126,18 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 		if (command.equals("save")) {
 			// 입력한 이름과 주소를 읽어와서
 			String name = inputName.getText();
-			String addr = inputAddr.getText();
-			// MemberDto 객체에 담고
-			MemberDto dto = new MemberDto();
+			String phone = inputPhone.getText();
+			String birth = inputBirth.getText();
+			// FriendDto 객체에 담고
+			FriendDto dto = new FriendDto();
 			dto.setName(name);
-			dto.setAddr(addr);
-			// MemberDao 객체를 이용해서 DB 에 저장하기
-			boolean isSuccess = new MemberDao().insert(dto);
+			dto.setPhone(phone);
+			dto.setBirth(birth);
+			// FriendDao 객체를 이용해서 DB 에 저장하기
+			boolean isSuccess = new FriendDao().insert(dto);
 			if (isSuccess) {
 				JOptionPane.showMessageDialog(this, name + " 의 정보를 추가 했습니다.");
-				displayMember();
+				displayFriend();
 			} else {
 				JOptionPane.showMessageDialog(this, "Oops! 실패 했습니다");
 			}
@@ -147,12 +152,12 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 			int result = JOptionPane.showConfirmDialog(this, "선택된 row 를 삭제 하시겠습니까?");
 			// 만일 예를 눌렀다면
 			if (result == JOptionPane.YES_OPTION) {
-				// 2. DefaultTableModel 에서 해당 인덱스의 table row 에서 삭제할 회원의 번호를 읽어와서(model 활용)
+				// 2. DefaultTableModel 에서 해당 인덱스의 table row 에서 삭제할 친구의 번호를 읽어와서(model 활용)
 				int num = (int) model.getValueAt(rowIndex, 0);
-				// 3. MemberDao 객체를 이용해서 DB 에서 삭제하고
-				new MemberDao().delete(num);
+				// 3. FriendDao 객체를 이용해서 DB 에서 삭제하고
+				new FriendDao().delete(num);
 				// 4. 새로 고침하기
-				displayMember();
+				displayFriend();
 			}
 		}
 
@@ -174,11 +179,12 @@ public class MemberFrame extends JFrame implements ActionListener, PropertyChang
 			int selectedIndex = table.getSelectedRow();
 			int num = (int) model.getValueAt(selectedIndex, 0);
 			String name = (String) model.getValueAt(selectedIndex, 1);
-			String addr = (String) model.getValueAt(selectedIndex, 2);
-			// 수정할 회원의 정보를 MemberDto 객체에 담고
-			MemberDto dto = new MemberDto(num, name, addr);
+			String phone = (String) model.getValueAt(selectedIndex, 2);
+			String birth = (String) model.getValueAt(selectedIndex, 3);
+			// 수정할 친구의 정보를 FriendDto 객체에 담고
+			FriendDto dto = new FriendDto(num, name, phone, birth);
 			// DB에 저장하기
-			new MemberDao().update(dto);
+			new FriendDao().update(dto);
 			// 선택된 row clear
 			table.clearSelection();
 		}
